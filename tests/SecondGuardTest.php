@@ -1,27 +1,27 @@
 <?php
 namespace Wangjian\FrequencyLimit\Test;
 
-use Wangjian\FrequencyLimit\MinuteGuard;
+use Wangjian\FrequencyLimit\SecondGuard;
 
-class MinuteLimitTest extends BaseTestCase
+class SecondGuardTest extends BaseTestCase
 {
     public function testPass()
     {
-        $guard = new MinuteGuard($this->client, 1);
+        $guard = new SecondGuard($this->client, 1);
         $this->assertEquals(true, $guard->pass('test'));
     }
 
     public function testFail()
     {
-        $guard = new MinuteGuard($this->client, 0);
+        $guard = new SecondGuard($this->client, 0);
         $this->assertEquals(false, $guard->pass('test'));
     }
 
     public function testRecover()
     {
-        $guard = new MinuteGuard($this->client, 1);
+        $guard = new SecondGuard($this->client, 1);
         $this->assertEquals(true, $guard->pass('test'));
-        sleep(61);
+        sleep(2);
         $this->assertEquals(true, $guard->pass('test'));
     }
 
