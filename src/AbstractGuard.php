@@ -43,12 +43,13 @@ abstract class AbstractGuard implements GuardInterface
     public function pass($value)
     {
         $luaScript = <<<EOT
-redis.call("setnx", KEYS[1], 0)
+if redis.call("setnx", KEYS[1], 0) then
+    redis.call("expire", KEYS[1], ARGV[2])
+end
 if redis.call("get", KEYS[1]) >= ARGV[1] then
     return 0
 else
     redis.call("incr", KEYS[1])
-    redis.call("expire", KEYS[1], ARGV[2])
     return 1
 end
 EOT;
@@ -60,11 +61,11 @@ EOT;
      * get the guard duration
      * @return int
      */
-    abstract public function getDuration();
+    abstract protected function getDuration();
 
     /**
      * get the guard name
      * @return string
      */
-    abstract public function getName();
+    abstract protected function getName();
 }

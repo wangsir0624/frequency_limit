@@ -1,15 +1,15 @@
 <?php
 namespace Wangjian\FrequencyLimit;
 
-class SecondGuard extends AbstractGuard
+class MinuteGuard extends AbstractGuard
 {
     protected function getDuration()
     {
-        return 1;
+        return 60;
     }
 
     protected function getName()
     {
-        return 'second_limit';
+        return 'minute_limit';
     }
 }
