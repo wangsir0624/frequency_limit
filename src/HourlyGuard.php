@@ -5,7 +5,7 @@ class HourlyGuard extends AbstractGuard
 {
     public function getDuration()
     {
-        return 86400;
+        return 3600;
     }
 
     public function getName()
