@@ -46,7 +46,7 @@ abstract class AbstractGuard implements GuardInterface
 if redis.call("setnx", KEYS[1], 0) then
     redis.call("expire", KEYS[1], ARGV[2])
 end
-if redis.call("get", KEYS[1]) >= ARGV[1] then
+if (redis.call("get", KEYS[1]) - ARGV[1]) >= 0 then
     return 0
 else
     redis.call("incr", KEYS[1])
